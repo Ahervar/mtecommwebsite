@@ -10,7 +10,8 @@ const MOCK_PRODUCTS = [
     "desc": "6.8\" Dynamic AMOLED · 200MP · 5000mAh · 12GB RAM",
     "tags": [
       "Trending",
-      "New"
+      "New",
+      "Aindroid"
       
     ]
   },
