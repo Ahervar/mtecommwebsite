@@ -10,7 +10,8 @@ const MOCK_PRODUCTS = [
     "desc": "6.8\" Dynamic AMOLED · 200MP · 5000mAh · 12GB RAM",
     "tags": [
       "Trending",
-      "New"
+      "New",
+      "Aindroid"
     ]
   },
   {
@@ -24,7 +25,9 @@ const MOCK_PRODUCTS = [
     "desc": "6.7\" OLED · A17 Pro · 256GB · Titanium",
     "tags": [
       "iPhoneDeals",
-      "Trending"
+      "Trending",
+      "Iphon",
+      "Apple"
     ]
   },
   {
@@ -38,7 +41,8 @@ const MOCK_PRODUCTS = [
     "desc": "6.82\" Fluid AMOLED · 50MP · 5000mAh · 12GB RAM",
     "tags": [
       "Trending",
-      "New"
+      "New",
+      "Aindroid"
     ]
   },
   {
