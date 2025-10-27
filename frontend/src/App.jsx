@@ -204,7 +204,7 @@ const NavigationBar = ({ allProducts, handleSearch, searchTerm, filteredProducts
           <Link to="/smartphones" onClick={() => setMenuOpen(false)} className="block px-4 py-3 text-sm font-semibold hover:bg-[#1a4fd8]">Smartphones</Link>
           <div className="pl-6 text-xs bg-[#1743a6] border-l-4 border-white/50">
             <Link to="/category/android" onClick={() => setMenuOpen(false)} className="block px-4 py-2 hover:bg-[#1f5fcc]">Android Phones</Link>
-            <Link to="/category/iphone" onClick={() => setMenuOpen(false)} className="block px-4 py-2 hover:bg-[#1f5fcc]">iPhones</Link>
+            <Link to="/category/apple" onClick={() => setMenuOpen(false)} className="block px-4 py-2 hover:bg-[#1f5fcc]">iPhones</Link>
           </div>
 
           {/* Accessories with nested link structure */}
