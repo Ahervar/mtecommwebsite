@@ -49,7 +49,17 @@ export default function CategoryPage({ allProducts }) {
             // 2. Match tags (FIXED: Check if the product tag contains the full URL slug)
             // This allows URL 'android' to match tags like 'Android' or 'AndroidPhones'.
             const tagMatch =
-                p.tags && p.tags.some((tag) => tag.toLowerCase().includes(normalizedCategory));
+              p.tags &&
+              p.tags.some((tag) => {
+                const t = tag.toLowerCase();
+                // match exact tag, plural/singular forms, and partials
+                return (
+                  t === normalizedCategory ||
+                  t.replace(/s$/, '') === normalizedCategory.replace(/s$/, '') ||
+                  t.includes(normalizedCategory)
+                );
+              });
+
             
             // 3. Match brand (FIXED: Match product brand against the full URL slug)
             // This allows URL 'apple' to match brand 'Apple'
