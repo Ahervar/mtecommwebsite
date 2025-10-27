@@ -11,7 +11,7 @@ const MOCK_PRODUCTS = [
     "tags": [
       "Trending",
       "New",
-      "Android"
+      "android"
       
     ]
   },
