@@ -26,8 +26,7 @@ const MOCK_PRODUCTS = [
     "tags": [
       "iPhoneDeals",
       "Trending",
-      "Iphon",
-      "Apple"
+      "Iphon"
     ]
   },
   {
