@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard'; // Retaining original path
+import ProductCard from '../components/ProductCard'; // Retaining original path
 
 // This function determines the title based on the category slug
 const formatTitle = (slug) => {
@@ -16,6 +17,7 @@ const formatTitle = (slug) => {
 // 1. Accept 'allProducts' as a prop from App.jsx
 export default function CategoryPage({ allProducts }) {
     // Get the dynamic part of the URL (e.g., 'trending', 'iphonedeals', 'apple', 'android')
+    // Get the dynamic part of the URL (e.g., 'trending', 'iphonedeals', 'apple', 'android')
     const { category } = useParams(); 
     const [filteredProducts, setFilteredProducts] = useState([]);
     
@@ -30,10 +32,18 @@ export default function CategoryPage({ allProducts }) {
         }
 
         const normalizedCategory = category.toLowerCase(); // e.g., 'android', 'apple'
+        const normalizedCategory = category.toLowerCase(); // e.g., 'android', 'apple'
 
         // Normalize helper for singular/plural comparison (only use for CATEGORY matching)
         // e.g., 'Smartphones' -> 'smartphone'
+        // Normalize helper for singular/plural comparison (only use for CATEGORY matching)
+        // e.g., 'Smartphones' -> 'smartphone'
         const normalizeWord = (word) =>
+          word.toLowerCase().replace(/s$/, ''); 
+        
+        // This is only used for the categoryMatch (e.g., matching 'smartphone' slug against product.category 'Smartphones')
+        const slugCatSingular = normalizeWord(normalizedCategory); 
+
           word.toLowerCase().replace(/s$/, ''); 
         
         // This is only used for the categoryMatch (e.g., matching 'smartphone' slug against product.category 'Smartphones')
@@ -68,6 +78,7 @@ export default function CategoryPage({ allProducts }) {
             
             return categoryMatch || tagMatch || brandMatch;
         });
+        
         
         setFilteredProducts(filtered);
     }, [allProducts, category]); // Dependency on the prop and the URL parameter

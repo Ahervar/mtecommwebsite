@@ -20,5 +20,5 @@ Backend: http://localhost:5000
 Frontend: http://localhost:5173
 
 Notes:
-- Orders are stored in backend/data/orders.json
-- Products: backend/data/products.json (you can edit and restart backend)
+- Orders are stored in backend/data/orders.js
+- Products: backend/data/products.js (you can edit and restart backend)
