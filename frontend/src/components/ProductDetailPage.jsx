@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { ShoppingCart, Zap } from 'lucide-react';
+import SuggestedProducts from './SuggestedProducts';
+import SuggestedAccessories from './SuggestedAccessories';
+import { ShoppingCart, Zap, Package, Shield, Truck } from 'lucide-react';
 
 // ProductDetailPage now accepts the 'product' object and 'addItem' function via props
-const ProductDetailPage = ({ product, addItem }) => {
+const ProductDetailPage = ({ product, addItem, allProducts }) => {
   if (!product) {
     // This case should ideally be handled by the parent component (App.jsx route)
     return <div className="text-center p-10 text-xl font-semibold">Loading product details...</div>;
@@ -18,67 +20,67 @@ const ProductDetailPage = ({ product, addItem }) => {
   const navigate = useNavigate();
 
   const ActionButtons = () => (
-    <div className="flex space-x-4">
-      {/* Add to Cart Button */}
-      <button 
-        className="flex-1 px-6 py-3 bg-[#FF9800] text-white font-semibold rounded-lg hover:bg-[#ff8f00] transition shadow-lg flex items-center justify-center gap-2"
-        onClick={() => {
-          if (addItem) {
-            addItem(product);
-            console.log(`Added ${product.name} to cart.`);
-          }
-        }}
-      >
-        <ShoppingCart size={20} /> Add to Cart
-      </button>
-  
-      {/* Buy Now Button */}
-      <button 
-        className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition shadow-lg flex items-center justify-center gap-2"
-        onClick={() => {
-          if (addItem) {
-            addItem(product); // Optional: keep if you want to add to cart before checkout
-          }
-          console.log(`Navigating to checkout with ${product.name}...`);
-          navigate("/cart"); // 🚀 This actually moves to the checkout page
-        }}
-      >
-        <Zap size={20} /> Buy Now
-      </button>
-    </div>
+    <div className="max-w-md mx-auto flex space-x-3">
+    {/* Add to Cart */}
+    <button
+      onClick={() => addItem(product)}
+      className="flex-1 py-3 bg-[#FF9800] text-white font-semibold rounded-lg hover:bg-[#f57c00] transition flex items-center justify-center gap-2 text-sm shadow-md"
+    >
+      <ShoppingCart size={18} /> Add to Cart
+    </button>
+
+    {/* Buy Now */}
+    <button
+      onClick={() => {
+        addItem(product);
+        navigate('/cart');
+      }}
+      className="flex-1 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2 text-sm shadow-md"
+    >
+      <Zap size={18} /> Buy Now
+    </button>
+  </div>
   );
   
-
-  // Helper component for suggested products (Mocked data)
-  const SuggestedProducts = () => (
-    <div className="p-4 md:p-8 bg-gray-50 border-t border-gray-200">
-      <h2 className="text-xl font-bold mb-4">You Might Also Like</h2>
-      {/* Horizontal scrollable for mobile, grid for desktop */}
-      <div className="flex overflow-x-auto space-x-4 md:grid md:grid-cols-4 md:space-x-0 md:gap-4">
-        {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="flex-shrink-0 w-40 md:w-auto bg-white p-3 rounded-xl shadow-md border border-gray-200 cursor-pointer hover:shadow-lg transition">
-            <img 
-                src={`https://placehold.co/100x80/2874F0/ffffff?text=Accessory+${i}`} 
-                alt={`Product ${i}`} 
-                className="w-full h-24 object-contain mb-2 rounded" 
-                onError={(e) => (e.target.src = `https://placehold.co/100x80/cccccc/333?text=Accessory+${i}`)}
-            />
-            <p className="text-sm font-semibold truncate">Pulse Ai+ {i}</p>
-            <p className="text-xs text-green-600 font-bold">₹{((1000 * i) + 999).toLocaleString()}</p>
+// service guarantees information
+  const ServiceGuarantees = () => (
+    <div className="border border-gray-200 p-4 rounded-xl shadow-sm bg-white lg:hidden">
+      <h3 className="text-xl font-bold mb-3 text-gray-800 border-b pb-2">Delivery & Services</h3>
+      <div className="space-y-4">
+        <div className="flex items-center">
+          <Truck size={20} className="text-green-500 mr-3 flex-shrink-0" />
+          <div>
+            <p className="font-semibold text-sm">Free Standard Delivery</p>
+            <p className="text-xs text-gray-500">Expected by 2-5 days</p>
           </div>
-        ))}
+        </div>
+        <div className="flex items-center">
+          <Package size={20} className="text-blue-500 mr-3 flex-shrink-0" />
+          <div>
+            <p className="font-semibold text-sm">7 Days Easy Replacement</p>
+            <p className="text-xs text-gray-500">Original box & condition required</p>
+          </div>
+        </div>
+        <div className="flex items-center">
+          <Shield size={20} className="text-yellow-500 mr-3 flex-shrink-0" />
+          <div>
+            <p className="font-semibold text-sm">1 Year Manufacturer Warranty</p>
+            <p className="text-xs text-gray-500">Covered against manufacturing defects</p>
+          </div>
+        </div>
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 pb-20 md:pb-0">
+    <>
+    <div className="min-h-screen bg-gray-100 pb-20 md:pb-0 font-sans">
       {/* === MAIN PRODUCT CONTAINER === */}
       <div className="max-w-7xl mx-auto md:grid md:grid-cols-3 md:gap-8 p-4 md:p-8 bg-white md:shadow-xl md:rounded-xl">
         
         {/* Left Column: Product Media (Image Gallery) - DESKTOP (1/3 width) */}
         <div className="hidden md:block col-span-1">
-          <div className="sticky top-20"> {/* Adjusted top for sticky header */}
+        <div className="sticky top-16"> {/* Adjusted top for sticky header */}
             <img 
                 src={product.img || `https://placehold.co/500x400/2874F0/ffffff?text=${product.name}`} 
                 alt={product.name} 
@@ -102,8 +104,8 @@ const ProductDetailPage = ({ product, addItem }) => {
         </div>
 
         {/* Middle Column: Details, Price, and Actions - DESKTOP (1/3 width) */}
-        <div className="col-span-1">
-          <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
+        <div className="col-span-1 hidden lg:block ">
+          <h1 className="text-3xl font-bold text-gray-900 ">{product.name}</h1>
           <p className="text-xl text-gray-500 mb-4">{product.brand}</p>
           
           <div className="mb-6 border-b pb-4">
@@ -174,6 +176,14 @@ const ProductDetailPage = ({ product, addItem }) => {
             </div>
             
             <p className="text-base text-gray-700 mb-4">{product.desc}</p>
+            <div className="mb-6">
+             <p className="font-semibold mb-2 text-gray-700">Storage/RAM: <span className="text-gray-900 font-bold">128GB/8GB</span></p>
+             <div className="flex space-x-2">
+               {['64GB', '128GB', '256GB'].map(variant => (
+                 <span key={variant} className={`p-2 border rounded-md text-sm cursor-pointer transition ${variant === '128GB' ? 'border-blue-600 bg-blue-50 text-blue-800 font-semibold' : 'hover:border-blue-600'}`}>{variant}</span>
+               ))}
+             </div>
+          </div>
             
              <h2 className="text-xl font-bold mt-4 mb-2">Key Highlights</h2>
               <ul className="space-y-2 mb-6 text-gray-700">
@@ -187,17 +197,27 @@ const ProductDetailPage = ({ product, addItem }) => {
                 <button className="text-blue-600 font-semibold text-sm mt-1">View Full Specification Sheet</button>
               </ul>
         </div>
+        <ServiceGuarantees />
       </div>
       
       {/* === SUGGESTION PRODUCTS (Visible on both) === */}
-      <SuggestedProducts />
+      <div className="mt-8">
+        <SuggestedProducts allProducts={allProducts} product={product} />
+      </div>
+      <div className="mt-8">
+        <SuggestedAccessories allProducts={allProducts} product={product} />
+      </div>
 
       {/* === STICKY FOOTER (MOBILE ONLY) === */}
-      <div className="fixed inset-x-0 bottom-0 md:hidden bg-white border-t p-3 shadow-2xl z-40">
+      <div className="fixed bottom-0 left-0 right-0 z-[10000] md:hidden bg-white border-t border-gray-200 p-3 shadow-[0_-2px_10px_rgba(0,0,0,0.1)]">
         <ActionButtons />
       </div>
       
+      
     </div>
+    
+    
+    </>  
   );
 };
 

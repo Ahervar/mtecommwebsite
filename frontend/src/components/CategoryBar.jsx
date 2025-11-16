@@ -13,7 +13,7 @@ const categories = [
 
 export default function CategoryBar() {
   return (
-    <div className="flex overflow-x-auto no-scrollbar gap-6 py-4 px-4 bg-white shadow-sm rounded-xl border border-gray-100 justify-center items-center">
+    <div className="flex overflow-x-auto no-scrollbar gap-6 py-4 px-4 bg-white shadow-sm rounded-xl border border-gray-100 lg:justify-center items-center">
     {categories.map((cat) => (
       <Link
         key={cat.name}

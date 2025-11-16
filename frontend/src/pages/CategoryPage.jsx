@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/ProductCard'; // Retaining original path
 
 // This function determines the title based on the category slug
 const formatTitle = (slug) => {
@@ -15,10 +15,9 @@ const formatTitle = (slug) => {
 
 // 1. Accept 'allProducts' as a prop from App.jsx
 export default function CategoryPage({ allProducts }) {
-    // Get the dynamic part of the URL (e.g., 'trending', 'iphonedeals')
+    // Get the dynamic part of the URL (e.g., 'trending', 'iphonedeals', 'apple', 'android')
     const { category } = useParams(); 
     const [filteredProducts, setFilteredProducts] = useState([]);
-    // We can remove the local 'loading' state, as we rely on the 'allProducts' prop
     
     // Format the URL parameter for display
     const title = formatTitle(category); 
@@ -30,31 +29,46 @@ export default function CategoryPage({ allProducts }) {
             return;
         }
 
-        const normalizedCategory = category.toLowerCase();
+        const normalizedCategory = category.toLowerCase(); // e.g., 'android', 'apple'
 
-        // Normalize helper for singular/plural comparison
+        // Normalize helper for singular/plural comparison (only use for CATEGORY matching)
+        // e.g., 'Smartphones' -> 'smartphone'
         const normalizeWord = (word) =>
-          word.toLowerCase().replace(/s$/, ''); // removes trailing 's' (Smartphones → Smartphone)
+          word.toLowerCase().replace(/s$/, ''); 
         
+        // This is only used for the categoryMatch (e.g., matching 'smartphone' slug against product.category 'Smartphones')
+        const slugCatSingular = normalizeWord(normalizedCategory); 
+
         const filtered = allProducts.filter((p) => {
-          const productCat = p.category ? normalizeWord(p.category) : '';
-          const slugCat = normalizeWord(normalizedCategory);
-        
-          // Match category (singular/plural insensitive)
-          const categoryMatch = productCat === slugCat;
-        
-          // Match tags
-          const tagMatch =
-            p.tags && p.tags.some((tag) => normalizeWord(tag) === slugCat);
-        
-          // Match brand
-          const brandMatch =
-            p.brand && normalizeWord(p.brand) === slugCat;
-        
-          return categoryMatch || tagMatch || brandMatch;
+            const productCat = p.category ? normalizeWord(p.category) : '';
+            
+            // 1. Match category (singular/plural insensitive)
+            // e.g., URL 'smartphone' matches product category 'Smartphones'
+            const categoryMatch = productCat === slugCatSingular;
+            
+            // 2. Match tags (FIXED: Check if the product tag contains the full URL slug)
+            // This allows URL 'android' to match tags like 'Android' or 'AndroidPhones'.
+            const tagMatch =
+            p.tags &&
+            p.tags.some((tag) => {
+              const t = tag.toLowerCase();
+              // match exact tag, plural/singular forms, and partials
+              return (
+                t === normalizedCategory ||
+                t.replace(/s$/, '') === normalizedCategory.replace(/s$/, '') ||
+                t.includes(normalizedCategory)
+              );
+            });
+          
+            
+            // 3. Match brand (FIXED: Match product brand against the full URL slug)
+            // This allows URL 'apple' to match brand 'Apple'
+            const brandMatch =
+                p.brand && p.brand.toLowerCase() === normalizedCategory;
+            
+            return categoryMatch || tagMatch || brandMatch;
         });
         
-
         setFilteredProducts(filtered);
     }, [allProducts, category]); // Dependency on the prop and the URL parameter
 

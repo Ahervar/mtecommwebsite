@@ -17,3 +17,9 @@ body {
   margin: 0 auto;
   padding: 16px;
 }
+@media (max-width: 768px) {
+  footer {
+    padding-bottom: 80px; /* Prevent footer overlap with sticky bar */
+  }
+}
+

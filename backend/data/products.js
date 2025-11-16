@@ -10,7 +10,8 @@ const MOCK_PRODUCTS = [
     "desc": "6.8\" Dynamic AMOLED · 200MP · 5000mAh · 12GB RAM",
     "tags": [
       "Trending",
-      "New"
+      "New",
+      "Android"
     ]
   },
   {
@@ -130,7 +131,8 @@ const MOCK_PRODUCTS = [
     "img": "https://www.boat-lifestyle.com/cdn/shop/products/main-img_AD621_1_600x.png?v=1616230788",
     "desc": "Wireless Earbuds · 24H Playback · IPX4",
     "tags": [
-      "Accessories"
+      "Accessories",
+      "Audio"
     ]
   },
   {
@@ -143,7 +145,8 @@ const MOCK_PRODUCTS = [
     "img": "https://m.media-amazon.com/images/I/51HYM-4CXVL._SX522_.jpg",
     "desc": "20000mAh Power Bank · Fast Charge",
     "tags": [
-      "Accessories"
+      "Accessories",
+      "Power"
     ]
   },
   {
@@ -156,7 +159,8 @@ const MOCK_PRODUCTS = [
     "img": "https://i01.appmifile.com/webfile/globalimg/xm_event/in/2d96a807dea5d9e526974dae7b53e01a.jpg",
     "desc": "33W Fast Charger · USB-C",
     "tags": [
-      "Accessories"
+      "Accessories",
+      "Power"
     ]
   },
   {
@@ -249,7 +253,8 @@ const MOCK_PRODUCTS = [
     "img": "https://m.media-amazon.com/images/I/31uoupSkzaL._SX300_SY300_QL70_FMwebp_.jpg",
     "desc": "25W Charger · USB-C",
     "tags": [
-      "Accessories"
+      "Accessories",
+      "Power"
     ]
   },
   {
@@ -262,7 +267,8 @@ const MOCK_PRODUCTS = [
     "img": "https://m.media-amazon.com/images/I/51rpbVmi9XL._SX522_.jpg",
     "desc": "Noise Cancelling Headphones · 35H Battery",
     "tags": [
-      "Accessories"
+      "Accessories",
+      "Audio"
     ]
   },
   {
