@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard'; // Retaining original path
-import ProductCard from '../components/ProductCard'; // Retaining original path
+
 
 // This function determines the title based on the category slug
 const formatTitle = (slug) => {
@@ -32,10 +32,7 @@ export default function CategoryPage({ allProducts }) {
         }
 
         const normalizedCategory = category.toLowerCase(); // e.g., 'android', 'apple'
-        const normalizedCategory = category.toLowerCase(); // e.g., 'android', 'apple'
-
-        // Normalize helper for singular/plural comparison (only use for CATEGORY matching)
-        // e.g., 'Smartphones' -> 'smartphone'
+      
         // Normalize helper for singular/plural comparison (only use for CATEGORY matching)
         // e.g., 'Smartphones' -> 'smartphone'
         const normalizeWord = (word) =>
@@ -46,8 +43,7 @@ export default function CategoryPage({ allProducts }) {
 
           word.toLowerCase().replace(/s$/, ''); 
         
-        // This is only used for the categoryMatch (e.g., matching 'smartphone' slug against product.category 'Smartphones')
-        const slugCatSingular = normalizeWord(normalizedCategory); 
+       
 
         const filtered = allProducts.filter((p) => {
             const productCat = p.category ? normalizeWord(p.category) : '';
