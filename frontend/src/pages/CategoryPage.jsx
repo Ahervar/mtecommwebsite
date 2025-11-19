@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ProductCard from '../components/ProductCard'; // Retaining original path
-
+// FIX: Added explicit '.jsx' extension to resolve the "Could not resolve" error.
+import ProductCard from '../components/ProductCard.jsx';
 
 // This function determines the title based on the category slug
 const formatTitle = (slug) => {
@@ -16,7 +16,6 @@ const formatTitle = (slug) => {
 
 // 1. Accept 'allProducts' as a prop from App.jsx
 export default function CategoryPage({ allProducts }) {
-    // Get the dynamic part of the URL (e.g., 'trending', 'iphonedeals', 'apple', 'android')
     // Get the dynamic part of the URL (e.g., 'trending', 'iphonedeals', 'apple', 'android')
     const { category } = useParams(); 
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -33,27 +32,30 @@ export default function CategoryPage({ allProducts }) {
 
         const normalizedCategory = category.toLowerCase(); // e.g., 'android', 'apple'
       
-        // Normalize helper for singular/plural comparison (only use for CATEGORY matching)
-        // e.g., 'Smartphones' -> 'smartphone'
-        const normalizeWord = (word) =>
-          word.toLowerCase().replace(/s$/, ''); 
+        /**
+         * Local Helper: normalizeWord
+         * Used for singular/plural comparison (e.g., 'Smartphones' -> 'smartphone')
+         * Since this is a small helper and it's not reused elsewhere, defining it here is fine.
+         * @param {string} word - The word to normalize.
+         * @returns {string} - The normalized (lowercase, singularized) word.
+         */
+        const normalizeWord = (word) => {
+            if (!word) return '';
+            return word.toLowerCase().replace(/s$/, ''); 
+        }
         
         // This is only used for the categoryMatch (e.g., matching 'smartphone' slug against product.category 'Smartphones')
         const slugCatSingular = normalizeWord(normalizedCategory); 
 
-          word.toLowerCase().replace(/s$/, ''); 
-        
-       
-
         const filtered = allProducts.filter((p) => {
+            // Normalize product category for comparison
             const productCat = p.category ? normalizeWord(p.category) : '';
             
             // 1. Match category (singular/plural insensitive)
             // e.g., URL 'smartphone' matches product category 'Smartphones'
             const categoryMatch = productCat === slugCatSingular;
             
-            // 2. Match tags (FIXED: Check if the product tag contains the full URL slug)
-            // This allows URL 'android' to match tags like 'Android' or 'AndroidPhones'.
+            // 2. Match tags (Check if any product tag matches the URL slug or a substring of it)
             const tagMatch =
             p.tags &&
             p.tags.some((tag) => {
@@ -67,14 +69,13 @@ export default function CategoryPage({ allProducts }) {
             });
           
             
-            // 3. Match brand (FIXED: Match product brand against the full URL slug)
+            // 3. Match brand (Match product brand against the full URL slug)
             // This allows URL 'apple' to match brand 'Apple'
             const brandMatch =
                 p.brand && p.brand.toLowerCase() === normalizedCategory;
             
             return categoryMatch || tagMatch || brandMatch;
         });
-        
         
         setFilteredProducts(filtered);
     }, [allProducts, category]); // Dependency on the prop and the URL parameter
@@ -90,7 +91,7 @@ export default function CategoryPage({ allProducts }) {
     }
     
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 min-h-screen">
             <h1 className="text-3xl font-extrabold mb-6 text-center text-gray-800 border-b pb-2">
                 {title} Products
             </h1>
