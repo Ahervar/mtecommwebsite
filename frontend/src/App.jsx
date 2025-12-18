@@ -8,7 +8,7 @@ import Checkout from "./pages/Checkout";
 import CategoryPage from "./pages/CategoryPage";
 import { CartProvider } from "./context/CartContext";
 import { useCart } from "./context/useCart";
-// Assuming MOCK_PRODUCTS is correctly imported from your project structure
+import VoiceSearchBar from './components/VoiceSearchBar';
 import MOCK_PRODUCTS from "../../backend/data/products.js"; 
 import ProductDetailPage from './components/ProductDetailPage';
 
@@ -221,6 +221,7 @@ const NavigationBar = ({ allProducts, handleSearch, searchTerm, filteredProducts
                     onBlur={handleInputBlur} // Hide results on blur (with delay)
                     className="ml-3 w-full bg-transparent text-gray-700 placeholder-gray-400 focus:outline-none" 
                 />
+                <VoiceSearchBar onVoiceResult={(text) => handleSearch(text)} />
             </div>
             {/* Desktop Search results dropdown - RENDERED ONLY IF TEXT EXISTS AND IS FOCUSED */}
             {searchTerm.trim() !== "" && isSearchFocused && (
@@ -353,6 +354,7 @@ const NavigationBar = ({ allProducts, handleSearch, searchTerm, filteredProducts
               onBlur={handleInputBlur} // Hide results on blur (with delay)
               className="ml-2 w-full bg-transparent text-gray-700 placeholder-gray-400 focus:outline-none" 
             />
+            <VoiceSearchBar onVoiceResult={(text) => handleSearch(text)} />
           </div>
           
           {/* Mobile Search results dropdown - Conditional rendering based on text and focus */}
