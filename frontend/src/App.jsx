@@ -221,7 +221,7 @@ const NavigationBar = ({ allProducts, handleSearch, searchTerm, filteredProducts
                     onBlur={handleInputBlur} // Hide results on blur (with delay)
                     className="ml-3 w-full bg-transparent text-gray-700 placeholder-gray-400 focus:outline-none" 
                 />
-                <VoiceSearchBar onVoiceResult={(text) => handleSearch(text)} />
+                <VoiceSearchBar onVoiceResult={(transcript) => handleSearch(transcript)} />
             </div>
             {/* Desktop Search results dropdown - RENDERED ONLY IF TEXT EXISTS AND IS FOCUSED */}
             {searchTerm.trim() !== "" && isSearchFocused && (
@@ -354,7 +354,7 @@ const NavigationBar = ({ allProducts, handleSearch, searchTerm, filteredProducts
               onBlur={handleInputBlur} // Hide results on blur (with delay)
               className="ml-2 w-full bg-transparent text-gray-700 placeholder-gray-400 focus:outline-none" 
             />
-            <VoiceSearchBar onVoiceResult={(text) => handleSearch(text)} />
+            <VoiceSearchBar onVoiceResult={(transcript) => handleSearch(transcript)} />
           </div>
           
           {/* Mobile Search results dropdown - Conditional rendering based on text and focus */}
