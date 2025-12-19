@@ -94,7 +94,19 @@ const NavigationBar = ({ allProducts, handleSearch, searchTerm, filteredProducts
   const [isSearchFocused, setIsSearchFocused] = useState(false); // NEW: Search focus state
   const headerRef = useRef(null);
   const lastScrollY = useRef(0); 
-  // No separate ref needed for dropdown since we rely on `onBlur` timeout
+  const searchInputRef = useRef(null);
+  
+  const handleVoiceSearchResult = (transcript) => {
+    handleSearch(transcript); // Trigger the search logic
+    
+    // Force focus back to the input immediately after voice result
+    if (searchInputRef.current) {
+      searchInputRef.current.focus(); 
+    }
+    
+    // Keep suggestions open
+    setIsSearchFocused(true); 
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -221,7 +233,7 @@ const NavigationBar = ({ allProducts, handleSearch, searchTerm, filteredProducts
                     onBlur={handleInputBlur} // Hide results on blur (with delay)
                     className="ml-3 w-full bg-transparent text-gray-700 placeholder-gray-400 focus:outline-none" 
                 />
-                <VoiceSearchBar onVoiceResult={(transcript) => handleSearch(transcript)} />
+                <VoiceSearchBar onVoiceResult={handleVoiceSearchResult} />
             </div>
             {/* Desktop Search results dropdown - RENDERED ONLY IF TEXT EXISTS AND IS FOCUSED */}
             {searchTerm.trim() !== "" && isSearchFocused && (
@@ -354,7 +366,7 @@ const NavigationBar = ({ allProducts, handleSearch, searchTerm, filteredProducts
               onBlur={handleInputBlur} // Hide results on blur (with delay)
               className="ml-2 w-full bg-transparent text-gray-700 placeholder-gray-400 focus:outline-none" 
             />
-            <VoiceSearchBar onVoiceResult={(transcript) => handleSearch(transcript)} />
+            <VoiceSearchBar onVoiceResult={handleVoiceSearchResult} />
           </div>
           
           {/* Mobile Search results dropdown - Conditional rendering based on text and focus */}
